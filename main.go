@@ -53,7 +53,7 @@ func main() {
 			start := question_start + used_core*per_core
 			end := start + core*per_core
 
-			run_machie(start, end, host)
+			run_machine(start, end, host)
 
 		}(host, hosts[host], used_core)
 
@@ -81,8 +81,8 @@ func run_machine(start, end int, host string) {
 	name := strings.Replace(host, ".", "-", -1)
 
 	cmd := exec.Command("ssh", host, "-l", "git", "-p", "10022", "/home/git/zhihu",
-		"-s", string(start),
-		"-e", string(end),
+		"-s", strconv.Itoa(start),
+		"-e", strconv.Itoa(end),
 		"-url", *url,
 		"-n", name,
 	)
