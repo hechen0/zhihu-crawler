@@ -176,9 +176,9 @@ func run_worker(start, end, crawler int) {
 			fmt.Printf("%s %s\n", question.Url, question.Title)
 
 		} else {
-			title := doc.Find("div.content strong").First().Text()
-			title = strings.Trim(title, " \r\n")
-			fmt.Println(title)
+			//title := doc.Find("div.content strong").First().Text()
+			//title = strings.Trim(title, " \r\n")
+			//fmt.Println(title)
 		}
 	}
 }
