@@ -58,6 +58,8 @@ var (
 	e   = flag.Int("e", 0, "question id end")
 	url = flag.String("url", "", "mongodb url")
 	db  = flag.String("db", "zhihu", "database")
+	c   = flag.Int("c", runtime.NumCPU(), "worker num")
+	n   = flag.String("n", "", "machine name")
 
 	regexCommentNum = regexp.MustCompile("^([0-9]{1}[0-9]+)(\\s+)(.+)$")
 )
@@ -76,9 +78,14 @@ func main() {
 		return
 	}
 
+	if *n == "" {
+		fmt.Println("machine name nust be set")
+		return
+	}
+
 	question_count := question_end - question_start
 
-	worker := runtime.NumCPU()
+	worker := *c
 
 	if worker > question_count {
 		panic(errors.New("question count must bigger than " + strconv.Itoa(worker)))
@@ -124,7 +131,7 @@ func run_worker(start, end, crawler int) {
 
 	go func() {
 		for range timer {
-			fmt.Printf("#%d: current_num: %d, count: %d, rate: %d\n", crawler, current_num, current_num-pre_num, (current_num-pre_num)/5)
+			fmt.Printf("%s-#%d: current_num: %d, count: %d, rate: %d\n", *n, crawler, current_num, current_num-pre_num, (current_num-pre_num)/5)
 			pre_num = current_num
 		}
 	}()
