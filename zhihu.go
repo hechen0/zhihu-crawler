@@ -122,8 +122,8 @@ func run_worker(start, end, crawler int) {
 	tag_collection := session.DB("zhihu").C("tag")
 	answer_collection := session.DB("zhihu").C("answer")
 
-	timer_period := 30
-	timer := time.Tick(timer_period * time.Second)
+	timer_period := 5
+	timer := time.Tick(5 * time.Second)
 
 	var current_num int
 	var pre_num int
@@ -133,7 +133,7 @@ func run_worker(start, end, crawler int) {
 	go func() {
 		for range timer {
 			t := time.Now().Format("01-31 15:04:15")
-			fmt.Printf("%s, %s-#%d: total: %d, current: %d, period: %d /%ss, rate: %d\n /s ", t, *n, crawler, end-start, current_num-start, current_num-pre_num, timer_period, (current_num-pre_num)/timer_period)
+			fmt.Printf("%s, %s-#%d: total: %d, current: %d, period: %d/%ds, rate: %d /s \n", t, *n, crawler, end-start, current_num-start, current_num-pre_num, timer_period, (current_num-pre_num)/timer_period)
 			pre_num = current_num
 		}
 	}()
@@ -177,6 +177,8 @@ func run_worker(start, end, crawler int) {
 
 			fmt.Printf("%s %s\n", question.Url, question.Title)
 
+		} else if resp.StatusCode == 429 {
+			fmt.Printf("429 returned !!!!! %s \n", url)
 		}
 	}
 }
