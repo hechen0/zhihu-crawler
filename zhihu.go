@@ -122,7 +122,8 @@ func run_worker(start, end, crawler int) {
 	tag_collection := session.DB("zhihu").C("tag")
 	answer_collection := session.DB("zhihu").C("answer")
 
-	timer := time.Tick(5 * time.Second)
+	timer_period := 30
+	timer := time.Tick(timer_period * time.Second)
 
 	var current_num int
 	var pre_num int
@@ -131,7 +132,8 @@ func run_worker(start, end, crawler int) {
 
 	go func() {
 		for range timer {
-			fmt.Printf("%s-#%d: current_num: %d, count: %d, rate: %d\n", *n, crawler, current_num, current_num-pre_num, (current_num-pre_num)/5)
+			t := time.Now().Format("01-31 15:04:15")
+			fmt.Printf("%s, %s-#%d: total: %d, current: %d, period: %d /%ss, rate: %d\n /s ", t, *n, crawler, end-start, current_num-start, current_num-pre_num, timer_period, (current_num-pre_num)/timer_period)
 			pre_num = current_num
 		}
 	}()
