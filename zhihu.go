@@ -175,10 +175,6 @@ func run_worker(start, end, crawler int) {
 
 			fmt.Printf("%s %s\n", question.Url, question.Title)
 
-		} else {
-			//title := doc.Find("div.content strong").First().Text()
-			//title = strings.Trim(title, " \r\n")
-			//fmt.Println(title)
 		}
 	}
 }
@@ -189,8 +185,8 @@ func extract_question(question_id int, doc *goquery.Document) *Question {
 	id := question_id
 	url := "https://www.zhihu.com/question/" + strconv.Itoa(question_id)
 
-	tmp_str = doc.Find(".zm-item-title").First().Text()
-	title := strings.Trim(tmp_str, " \r\n")
+	tmp_str = doc.Find("#zh-question-title").First().Text()
+	title := trim(tmp_str)
 
 	tmp_str, _ = doc.Find("h3#zh-question-answer-num").First().Attr("data-num")
 	answer_num, _ := strconv.Atoi(tmp_str)
