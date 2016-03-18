@@ -8,7 +8,7 @@ def main():
   for i in range(total):
     j = i + 1
     if j % 9 == 0:
-      cmd = "git add %s %s %s %s %s %s %s %s %s; git commit -m 'left %s'; git push;" % (files[i-8], files[i-7], files[i-6], files[i-5], files[i-4], files[i-3], files[i-2], files[i-1], files[i], total - i)
+      cmd = "git add %s %s %s %s %s %s; git commit -m 'left %s'; git push;" % (files[i-5], files[i-4], files[i-3], files[i-2], files[i-1], files[i], total - i)
       subprocess.call(cmd, shell=True)
       sleep(.5)
 
