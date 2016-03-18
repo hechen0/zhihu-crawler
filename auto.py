@@ -6,9 +6,11 @@ def main():
 
   total = len(files_to_commit)
   for i in range(total):
-    cmd = "git add %s; git commit -m 'left %s'; git push;" % (files_to_commit[i], total - i)
-    subprocess.call(cmd, shell=True)
-    sleep(.5)
+    j = i + 1
+    if j % 3 == 0:
+      cmd = "git add %s %s %s; git commit -m 'left %s'; git push;" % (files_to_commit[i - 2], files_to_commit[i-1], files_to_commit[i], total - i)
+      subprocess.call(cmd, shell=True)
+      sleep(.5)
 
 if __name__ == "__main__":
 	main()
