@@ -4,8 +4,9 @@ import subprocess
 def main():
   files_to_commit = subprocess.check_output("git ls-files . --others --exclude-standard", shell=True).strip().split("\n")
 
-  for f in files_to_commit:
-    cmd = "git add %s; git commit -m 'update'; git push;" % f
+  total = len(files_to_commit)
+  for i in range(total):
+    cmd = "git add %s; git commit -m 'left %s'; git push;" % (files_to_commit[i], total - i)
     subprocess.call(cmd, shell=True)
     sleep(.5)
 
