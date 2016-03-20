@@ -122,8 +122,8 @@ func run_worker(start, end, crawler int) {
 	tag_collection := session.DB("zhihu").C("tag")
 	answer_collection := session.DB("zhihu").C("answer")
 
-	timer_period := 5
-	timer := time.Tick(5 * time.Second)
+	timer_period := 20
+	timer := time.Tick(20 * time.Second)
 
 	var current_num int
 	var pre_num int
